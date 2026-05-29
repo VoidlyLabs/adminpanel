@@ -1,23 +1,11 @@
 'use client';
-import React, { useEffect, useRef, useState, useCallback } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { useSidebar } from '../context/SidebarContext';
-import {
-  BoxCubeIcon,
-  CalenderIcon,
-  ChevronDownIcon,
-  GridIcon,
-  HorizontaLDots,
-  ListIcon,
-  PageIcon,
-  PieChartIcon,
-  PlugInIcon,
-  TableIcon,
-  UserCircleIcon,
-} from '../icons/index';
-import SidebarWidget from './SidebarWidget';
+import { ChevronDown, Settings, ShoppingBag, User } from 'react-feather';
+import { HorizontalDots } from '@/icons';
 
 type NavItem = {
   name: string;
@@ -28,71 +16,23 @@ type NavItem = {
 
 const navItems: NavItem[] = [
   {
-    icon: <GridIcon />,
-    name: 'Dashboard',
-    subItems: [{ name: 'Ecommerce', path: '/', pro: false }],
+    icon: <User />,
+    name: 'Users',
+    path: '/users',
   },
   {
-    icon: <CalenderIcon />,
-    name: 'Calendar',
-    path: '/calendar',
+    icon: <ShoppingBag />,
+    name: 'Categories & Products',
+    path: '/category',
   },
   {
-    icon: <UserCircleIcon />,
-    name: 'User Profile',
-    path: '/profile',
-  },
-
-  {
-    name: 'Forms',
-    icon: <ListIcon />,
-    subItems: [{ name: 'Form Elements', path: '/form-elements', pro: false }],
-  },
-  {
-    name: 'Tables',
-    icon: <TableIcon />,
-    subItems: [{ name: 'Basic Tables', path: '/basic-tables', pro: false }],
-  },
-  {
-    name: 'Pages',
-    icon: <PageIcon />,
-    subItems: [
-      { name: 'Blank Page', path: '/blank', pro: false },
-      { name: '404 Error', path: '/error-404', pro: false },
-    ],
+    icon: <Settings />,
+    name: 'Configuration',
+    path: '/configuration',
   },
 ];
 
-const othersItems: NavItem[] = [
-  {
-    icon: <PieChartIcon />,
-    name: 'Charts',
-    subItems: [
-      { name: 'Line Chart', path: '/line-chart', pro: false },
-      { name: 'Bar Chart', path: '/bar-chart', pro: false },
-    ],
-  },
-  {
-    icon: <BoxCubeIcon />,
-    name: 'UI Elements',
-    subItems: [
-      { name: 'Alerts', path: '/alerts', pro: false },
-      { name: 'Avatar', path: '/avatars', pro: false },
-      { name: 'Badge', path: '/badge', pro: false },
-      { name: 'Buttons', path: '/buttons', pro: false },
-      { name: 'Images', path: '/images', pro: false },
-      { name: 'Videos', path: '/videos', pro: false },
-    ],
-  },
-  {
-    icon: <PlugInIcon />,
-    name: 'Authentication',
-    subItems: [
-      { name: 'Sign In', path: '/signin', pro: false },
-      { name: 'Sign Up', path: '/signup', pro: false },
-    ],
-  },
-];
+const othersItems: NavItem[] = [];
 
 const AppSidebar: React.FC = () => {
   const { isExpanded, isMobileOpen, isHovered, setIsHovered } = useSidebar();
@@ -131,7 +71,7 @@ const AppSidebar: React.FC = () => {
                 <span className={`menu-item-text`}>{nav.name}</span>
               )}
               {(isExpanded || isHovered || isMobileOpen) && (
-                <ChevronDownIcon
+                <ChevronDown
                   className={`ml-auto w-5 h-5 transition-transform duration-200  ${
                     openSubmenu?.type === menuType &&
                     openSubmenu?.index === index
@@ -310,29 +250,25 @@ const AppSidebar: React.FC = () => {
       >
         <Link href="/">
           {isExpanded || isHovered || isMobileOpen ? (
-            <>
-              <Image
-                className="dark:hidden"
-                src="/images/logo/logo.svg"
-                alt="Logo"
-                width={150}
-                height={40}
-              />
-              <Image
-                className="hidden dark:block"
-                src="/images/logo/logo-dark.svg"
-                alt="Logo"
-                width={150}
-                height={40}
-              />
-            </>
+            <div className={'w-full items-center text-center justify-center'}>
+              <span
+                className={
+                  'text-3xl text-center dark:text-purple-300 text-purple-600 font-semibold'
+                }
+              >
+                VoidlyAdmin
+              </span>
+            </div>
           ) : (
-            <Image
-              src="/images/logo/logo-icon.svg"
-              alt="Logo"
-              width={32}
-              height={32}
-            />
+            <div className={'w-full items-center text-center justify-center'}>
+              <span
+                className={
+                  'text-3xl text-center dark:text-purple-300 text-purple-600 font-semibold'
+                }
+              >
+                V
+              </span>
+            </div>
           )}
         </Link>
       </div>
@@ -350,7 +286,7 @@ const AppSidebar: React.FC = () => {
                 {isExpanded || isHovered || isMobileOpen ? (
                   'Menu'
                 ) : (
-                  <HorizontaLDots />
+                  <HorizontalDots />
                 )}
               </h2>
               {renderMenuItems(navItems, 'main')}
@@ -364,17 +300,16 @@ const AppSidebar: React.FC = () => {
                     : 'justify-start'
                 }`}
               >
-                {isExpanded || isHovered || isMobileOpen ? (
-                  'Others'
-                ) : (
-                  <HorizontaLDots />
-                )}
+                {/*{isExpanded || isHovered || isMobileOpen ? (*/}
+                {/*  'Others'*/}
+                {/*) : (*/}
+                {/*  <HorizontalDots />*/}
+                {/*)}*/}
               </h2>
               {renderMenuItems(othersItems, 'others')}
             </div>
           </div>
         </nav>
-        {isExpanded || isHovered || isMobileOpen ? <SidebarWidget /> : null}
       </div>
     </aside>
   );
