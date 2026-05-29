@@ -1,0 +1,60 @@
+{
+  "auth": {
+    "brandName": "VoidlyAdmin",
+    "signIn": {
+      "title": "Sign in",
+      "subtitle": "Enter your email and password to sign in!",
+      "email": "Email",
+      "usernamePlaceholder": "your-username",
+      "password": "Password",
+      "passwordPlaceholder": "Enter your password",
+      "submit": "Sign in"
+    },
+    "signUp": {
+      "title": "Sign Up",
+      "subtitle": "Enter your email and password to sign up!",
+      "google": "Sign up with Google",
+      "x": "Sign up with X",
+      "divider": "Or",
+      "firstName": "First Name",
+      "firstNamePlaceholder": "Enter your first name",
+      "lastName": "Last Name",
+      "lastNamePlaceholder": "Enter your last name",
+      "email": "Email",
+      "emailPlaceholder": "Enter your email",
+      "password": "Password",
+      "passwordPlaceholder": "Enter your password",
+      "agreementPrefix": "By creating an account means you agree to the",
+      "terms": "Terms and Conditions,",
+      "agreementMiddle": "and our",
+      "privacy": "Privacy Policy",
+      "submit": "Sign Up",
+      "alreadyHaveAccount": "Already have an account?",
+      "signIn": "Sign In"
+    }
+  },
+  "sidebar": {
+    "brandName": "VoidlyAdmin",
+    "brandShortName": "V",
+    "menu": "Menu",
+    "nav": {
+      "users": "Users",
+      "categoriesProducts": "Categories & Products",
+      "configuration": "Configuration"
+    },
+    "badges": {
+      "new": "new",
+      "pro": "pro"
+    }
+  },
+  "header": {
+    "toggleSidebar": "Toggle Sidebar",
+    "user": {
+      "signOut": "Sign out"
+    }
+  },
+  "home": {
+    "headline": "There's nothing here yet",
+    "description": "But you can choose page in the sidebar"
+  }
+}

@@ -1,33 +1,33 @@
 'use client';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
-import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { useSidebar } from '../context/SidebarContext';
 import { ChevronDown, Settings, ShoppingBag, User } from 'react-feather';
 import { HorizontalDots } from '@/icons';
+import { useT } from '@/shared/hooks/use-t/use-t.hook';
 
 type NavItem = {
-  name: string;
+  nameKey: string;
   icon: React.ReactNode;
   path?: string;
-  subItems?: { name: string; path: string; pro?: boolean; new?: boolean }[];
+  subItems?: { nameKey: string; path: string; pro?: boolean; new?: boolean }[];
 };
 
 const navItems: NavItem[] = [
   {
     icon: <User />,
-    name: 'Users',
+    nameKey: 'sidebar.nav.users',
     path: '/users',
   },
   {
     icon: <ShoppingBag />,
-    name: 'Categories & Products',
+    nameKey: 'sidebar.nav.categoriesProducts',
     path: '/category',
   },
   {
     icon: <Settings />,
-    name: 'Configuration',
+    nameKey: 'sidebar.nav.configuration',
     path: '/configuration',
   },
 ];
@@ -37,6 +37,7 @@ const othersItems: NavItem[] = [];
 const AppSidebar: React.FC = () => {
   const { isExpanded, isMobileOpen, isHovered, setIsHovered } = useSidebar();
   const pathname = usePathname();
+  const t = useT();
 
   const renderMenuItems = (
     navItems: NavItem[],
@@ -44,7 +45,7 @@ const AppSidebar: React.FC = () => {
   ) => (
     <ul className="flex flex-col gap-4">
       {navItems.map((nav, index) => (
-        <li key={nav.name}>
+        <li key={nav.nameKey}>
           {nav.subItems ? (
             <button
               onClick={() => handleSubmenuToggle(index, menuType)}
@@ -68,7 +69,7 @@ const AppSidebar: React.FC = () => {
                 {nav.icon}
               </span>
               {(isExpanded || isHovered || isMobileOpen) && (
-                <span className={`menu-item-text`}>{nav.name}</span>
+                <span className={`menu-item-text`}>{t(nav.nameKey)}</span>
               )}
               {(isExpanded || isHovered || isMobileOpen) && (
                 <ChevronDown
@@ -99,7 +100,7 @@ const AppSidebar: React.FC = () => {
                   {nav.icon}
                 </span>
                 {(isExpanded || isHovered || isMobileOpen) && (
-                  <span className={`menu-item-text`}>{nav.name}</span>
+                  <span className={`menu-item-text`}>{t(nav.nameKey)}</span>
                 )}
               </Link>
             )
@@ -119,7 +120,7 @@ const AppSidebar: React.FC = () => {
             >
               <ul className="mt-2 space-y-1 ml-9">
                 {nav.subItems.map((subItem) => (
-                  <li key={subItem.name}>
+                  <li key={subItem.nameKey}>
                     <Link
                       href={subItem.path}
                       className={`menu-dropdown-item ${
@@ -128,7 +129,7 @@ const AppSidebar: React.FC = () => {
                           : 'menu-dropdown-item-inactive'
                       }`}
                     >
-                      {subItem.name}
+                      {t(subItem.nameKey)}
                       <span className="flex items-center gap-1 ml-auto">
                         {subItem.new && (
                           <span
@@ -138,7 +139,7 @@ const AppSidebar: React.FC = () => {
                                 : 'menu-dropdown-badge-inactive'
                             } menu-dropdown-badge `}
                           >
-                            new
+                            {t('sidebar.badges.new')}
                           </span>
                         )}
                         {subItem.pro && (
@@ -149,7 +150,7 @@ const AppSidebar: React.FC = () => {
                                 : 'menu-dropdown-badge-inactive'
                             } menu-dropdown-badge `}
                           >
-                            pro
+                            {t('sidebar.badges.pro')}
                           </span>
                         )}
                       </span>
@@ -256,7 +257,7 @@ const AppSidebar: React.FC = () => {
                   'text-3xl text-center dark:text-purple-300 text-purple-600 font-semibold'
                 }
               >
-                VoidlyAdmin
+                {t('sidebar.brandName')}
               </span>
             </div>
           ) : (
@@ -266,7 +267,7 @@ const AppSidebar: React.FC = () => {
                   'text-3xl text-center dark:text-purple-300 text-purple-600 font-semibold'
                 }
               >
-                V
+                {t('sidebar.brandShortName')}
               </span>
             </div>
           )}
@@ -284,7 +285,7 @@ const AppSidebar: React.FC = () => {
                 }`}
               >
                 {isExpanded || isHovered || isMobileOpen ? (
-                  'Menu'
+                  t('sidebar.menu')
                 ) : (
                   <HorizontalDots />
                 )}

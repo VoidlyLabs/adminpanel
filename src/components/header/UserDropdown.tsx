@@ -1,16 +1,15 @@
 'use client';
-import Image from 'next/image';
-import Link from 'next/link';
 import React, { useState } from 'react';
 import { Dropdown } from '../ui/dropdown/Dropdown';
-import { DropdownItem } from '../ui/dropdown/DropdownItem';
-import { useMe, useSignOut } from '@/shared/api/services/auth/auth.queries';
+import { useSignOut } from '@/shared/api/services/auth/auth.queries';
 import { useOwnUser } from '@/shared/providers/own-user/own-user.context';
+import { useT } from '@/shared/hooks/use-t/use-t.hook';
 
 export default function UserDropdown() {
-  const { username, id } = useOwnUser();
+  const { username } = useOwnUser();
   const logout = useSignOut();
   const [isOpen, setIsOpen] = useState(false);
+  const t = useT();
 
   function toggleDropdown(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
     e.stopPropagation();
@@ -100,7 +99,7 @@ export default function UserDropdown() {
               fill=""
             />
           </svg>
-          Sign out
+          {t('header.user.signOut')}
         </button>
       </Dropdown>
     </div>

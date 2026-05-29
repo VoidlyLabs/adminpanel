@@ -1,14 +1,15 @@
 'use client';
 import { ThemeToggleButton } from '@/components/common/ThemeToggleButton';
-import NotificationDropdown from '@/components/header/NotificationDropdown';
+import { LanguageToggleButton } from '@/components/common/LanguageToggleButton';
 import UserDropdown from '@/components/header/UserDropdown';
 import { useSidebar } from '@/context/SidebarContext';
-import Image from 'next/image';
 import Link from 'next/link';
 import React, { useState, useEffect, useRef } from 'react';
+import { useT } from '@/shared/hooks/use-t/use-t.hook';
 
 const AppHeader: React.FC = () => {
   const [isApplicationMenuOpen, setApplicationMenuOpen] = useState(false);
+  const t = useT();
 
   const { isMobileOpen, toggleSidebar, toggleMobileSidebar } = useSidebar();
 
@@ -47,7 +48,7 @@ const AppHeader: React.FC = () => {
           <button
             className="items-center justify-center w-10 h-10 text-gray-500 border-gray-200 rounded-lg z-99999 dark:border-gray-800 lg:flex dark:text-gray-400 lg:h-11 lg:w-11 lg:border"
             onClick={handleToggle}
-            aria-label="Toggle Sidebar"
+            aria-label={t('header.toggleSidebar')}
           >
             {isMobileOpen ? (
               <svg
@@ -90,7 +91,7 @@ const AppHeader: React.FC = () => {
                   'text-3xl text-center dark:text-purple-300 text-purple-600 font-semibold'
                 }
               >
-                VoidlyAdmin
+                {t('sidebar.brandName')}
               </span>
             </div>
           </Link>
@@ -124,6 +125,7 @@ const AppHeader: React.FC = () => {
             {/* <!-- Dark Mode Toggler --> */}
             <ThemeToggleButton />
             {/* <!-- Dark Mode Toggler --> */}
+            <LanguageToggleButton />
           </div>
           {/* <!-- User Area --> */}
           <UserDropdown />

@@ -1,19 +1,18 @@
 'use client';
-import Checkbox from '@/components/form/input/Checkbox';
 import Input from '@/components/form/input/InputField';
 import Label from '@/components/form/Label';
 import Button from '@/components/ui/button/Button';
-import { ChevronLeftIcon, EyeCloseIcon, EyeIcon } from '@/icons';
-import Link from 'next/link';
+import { EyeCloseIcon, EyeIcon } from '@/icons';
 import React, { useState } from 'react';
 import { useSignIn } from '@/shared/api/services/auth/auth.queries';
+import { useT } from '@/shared/hooks/use-t/use-t.hook';
 
 export default function SignInForm() {
   const [password, setPassword] = useState('');
   const [username, setUsername] = useState('');
   const [showPassword, setShowPassword] = useState(false);
-  const [isChecked, setIsChecked] = useState(false);
   const signIn = useSignIn();
+  const t = useT();
 
   const handleSignIn = () => {
     signIn.mutate({ password, username });
@@ -25,10 +24,10 @@ export default function SignInForm() {
         <div>
           <div className="mb-5 sm:mb-8">
             <h1 className="mb-2 font-semibold text-gray-800 text-title-sm dark:text-white/90 sm:text-title-md">
-              Sign In
+              {t('auth.signIn.title')}
             </h1>
             <p className="text-sm text-gray-500 dark:text-gray-400">
-              Enter your email and password to sign in!
+              {t('auth.signIn.subtitle')}
             </p>
           </div>
           <div>
@@ -43,25 +42,27 @@ export default function SignInForm() {
               <div className="space-y-6">
                 <div>
                   <Label>
-                    Email <span className="text-error-500">*</span>{' '}
+                    {t('auth.signIn.email')}{' '}
+                    <span className="text-error-500">*</span>{' '}
                   </Label>
                   <Input
                     value={username}
                     onChange={(e) => setUsername(e.target.value)}
-                    placeholder="your-username"
+                    placeholder={t('auth.signIn.usernamePlaceholder')}
                     type="text"
                   />
                 </div>
                 <div>
                   <Label>
-                    Password <span className="text-error-500">*</span>{' '}
+                    {t('auth.signIn.password')}{' '}
+                    <span className="text-error-500">*</span>{' '}
                   </Label>
                   <div className="relative">
                     <Input
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
                       type={showPassword ? 'text' : 'password'}
-                      placeholder="Enter your password"
+                      placeholder={t('auth.signIn.passwordPlaceholder')}
                     />
                     <span
                       onClick={() => setShowPassword(!showPassword)}
@@ -91,7 +92,7 @@ export default function SignInForm() {
                 {/*</div>*/}
                 <div>
                   <Button className="w-full" size="sm">
-                    Sign in
+                    {t('auth.signIn.submit')}
                   </Button>
                 </div>
               </div>

@@ -2,14 +2,17 @@ import { AuthService } from '@/shared/api/services/auth/auth.service';
 import { TimeUtils } from '@/shared/lib/time.utils';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import toast from 'react-hot-toast';
+import { useI18n } from '@/shared/providers/i18n/i18n.context';
 
-export const useSignIn = () =>
+export const useSignIn = () => {
+  const { lang } = useI18n();
+
   useMutation({
     mutationKey: ['authSignIn'],
     mutationFn: AuthService.signIn,
 
     onSuccess() {
-      window.location.replace('/');
+      window.location.replace(`/${lang}/`);
     },
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -19,6 +22,7 @@ export const useSignIn = () =>
       console.error(error);
     },
   });
+};
 
 export const useSignOut = () =>
   useMutation({
