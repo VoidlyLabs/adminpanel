@@ -1,0 +1,159 @@
+{
+  "auth": {
+    "brandName": "VoidlyAdmin",
+    "signIn": {
+      "title": "Увійти",
+      "subtitle": "Введіть свою електронну адресу та пароль, щоб увійти!",
+      "email": "Електронна пошта",
+      "usernamePlaceholder": "ваше-ім'я-користувача",
+      "password": "Пароль",
+      "passwordPlaceholder": "Введіть свій пароль",
+      "submit": "Увійти"
+    },
+    "signUp": {
+      "title": "Реєстрація",
+      "subtitle": "Введіть свою електронну адресу та пароль, щоб зареєструватися!",
+      "google": "Зареєструватися через Google",
+      "x": "Зареєструватися через X",
+      "divider": "Або",
+      "firstName": "Ім'я",
+      "firstNamePlaceholder": "Введіть своє ім'я",
+      "lastName": "Прізвище",
+      "lastNamePlaceholder": "Введіть своє прізвище",
+      "email": "Електронна пошта",
+      "emailPlaceholder": "Введіть свою електронну адресу",
+      "password": "Пароль",
+      "passwordPlaceholder": "Введіть свій пароль",
+      "agreementPrefix": "Створюючи обліковий запис, ви погоджуєтеся з",
+      "terms": "Умовами та положеннями,",
+      "agreementMiddle": "а також з нашою",
+      "privacy": "Політикою конфіденційності",
+      "submit": "Зареєструватися",
+      "alreadyHaveAccount": "Вже маєте обліковий запис?",
+      "signIn": "Увійти"
+    }
+  },
+  "sidebar": {
+    "brandName": "VoidlyAdmin",
+    "brandShortName": "V",
+    "menu": "Меню",
+    "nav": {
+      "users": "Користувачі",
+      "categoriesProducts": "Категорії та товари",
+      "configuration": "Налаштування"
+    },
+    "badges": {
+      "new": "new",
+      "pro": "pro"
+    }
+  },
+  "header": {
+    "toggleSidebar": "Перемкнути бічну панель",
+    "user": {
+      "signOut": "Вийти"
+    }
+  },
+  "home": {
+    "headline": "Тут поки що ніхуя нема",
+    "description": "До дедлайну 4 дня"
+  },
+  "breadcrumbs": {
+    "home": "Головна"
+  },
+  "configuration": {
+    "title": "Налаштування",
+    "basicInformation": "Основна інформація",
+    "name": "Назва",
+    "namePlaceholder": "Введіть назву проєкту",
+    "description": "Опис",
+    "descriptionPlaceholder": "Введіть опис проєкту",
+    "saveChanges": "Зберегти зміни",
+    "saving": "Збереження...",
+    "logo": "Логотип",
+    "logoAltSuffix": "логотип",
+    "noLogoUploaded": "Логотип не завантажено",
+    "uploadLogo": "Завантажити логотип",
+    "selectedFilePrefix": "Вибрано",
+    "uploading": "Завантаження...",
+    "deleteLogo": "Видалити логотип",
+    "deleting": "Видалення...",
+    "toasts": {
+      "updated": "Налаштування оновлено",
+      "logoUploaded": "Логотип завантажено",
+      "logoDeleted": "Логотип видалено"
+    }
+  },
+  "category": {
+    "title": "Категорії та товари",
+    "categories": "Категорії",
+    "products": "Товари",
+    "categoryDetails": "Категорія",
+    "selectedCategory": "Вибрана категорія",
+    "createCategory": "Створити категорію",
+    "createProduct": "Створити товар",
+    "name": "Назва",
+    "namePlaceholder": "Введіть назву категорії",
+    "productName": "Назва",
+    "productNamePlaceholder": "Введіть назву товару",
+    "description": "Опис",
+    "descriptionPlaceholder": "Введіть опис товару",
+    "image": "Зображення",
+    "noImage": "Немає зображення",
+    "uploadImage": "Завантажити зображення",
+    "deleteImage": "Видалити зображення",
+    "price": "Ціна",
+    "pricePlaceholder": "Введіть ціну товару",
+    "isAvailable": "Доступний",
+    "actions": "Дії",
+    "open": "Відкрити",
+    "edit": "Редагувати",
+    "delete": "Видалити",
+    "save": "Зберегти",
+    "cancel": "Скасувати",
+    "yes": "Так",
+    "no": "Ні",
+    "noCategories": "Категорій ще немає",
+    "noProducts": "У цій категорії ще немає товарів",
+    "confirmDeleteCategory": "Видалити цю категорію?",
+    "confirmDeleteProduct": "Видалити цей товар?",
+    "create": "Створити",
+    "creating": "Створення...",
+    "uploading": "Завантаження...",
+    "deleting": "Видалення...",
+    "toasts": {
+      "categoryCreated": "Категорію створено",
+      "categoryUpdated": "Категорію оновлено",
+      "categoryDeleted": "Категорію видалено",
+      "productCreated": "Товар створено",
+      "productUpdated": "Товар оновлено",
+      "productDeleted": "Товар видалено",
+      "productImageUploaded": "Зображення товару завантажено",
+      "productImageDeleted": "Зображення товару видалено"
+    }
+  },
+  "users": {
+    "title": "Користувачі",
+    "list": "Користувачі",
+    "createUser": "Створити користувача",
+    "username": "Ім'я користувача",
+    "usernamePlaceholder": "Введіть ім'я користувача",
+    "password": "Пароль",
+    "passwordPlaceholder": "Введіть пароль",
+    "passwordHint": "Мінімум 5 символів",
+    "createdAt": "Створено",
+    "actions": "Дії",
+    "create": "Створити",
+    "creating": "Створення...",
+    "edit": "Редагувати",
+    "delete": "Видалити",
+    "save": "Зберегти",
+    "cancel": "Скасувати",
+    "noUsers": "Користувачів ще немає",
+    "confirmDelete": "Видалити цього користувача?",
+    "toasts": {
+      "created": "Користувача створено",
+      "updated": "Користувача оновлено",
+      "deleted": "Користувача видалено"
+    }
+  }
+}
