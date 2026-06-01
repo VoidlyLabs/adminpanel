@@ -7,7 +7,7 @@ import { useI18n } from '@/shared/providers/i18n/i18n.context';
 export const useSignIn = () => {
   const { lang } = useI18n();
 
-  useMutation({
+  return useMutation({
     mutationKey: ['authSignIn'],
     mutationFn: AuthService.signIn,
 
