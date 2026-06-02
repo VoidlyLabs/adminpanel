@@ -5,12 +5,28 @@ export interface BasicConfiguration {
   name: string;
   description: string;
   logoUrl: string;
+  accentColor: string;
+  backgroundColor: string;
+  secondaryColor: string;
+  phoneNumber: string;
+  email: string;
+  createdAt: string;
+  updatedAt: string;
 }
 
 // Requests
 
 export type Configuration_Update_Request = Partial<
-  Pick<BasicConfiguration, 'name' | 'description'>
+  Pick<
+    BasicConfiguration,
+    | 'name'
+    | 'description'
+    | 'accentColor'
+    | 'backgroundColor'
+    | 'secondaryColor'
+    | 'phoneNumber'
+    | 'email'
+  >
 >;
 
 export interface Configuration_UpdateLogo_Request {
