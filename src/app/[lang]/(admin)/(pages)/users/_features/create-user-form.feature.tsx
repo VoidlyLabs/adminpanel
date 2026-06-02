@@ -15,8 +15,14 @@ export default function CreateUserFormFeature() {
 
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [balance, setBalance] = useState('');
 
-  const canSubmit = username.trim() && password.length >= 5;
+  const numericBalance = balance === '' ? 0 : Number(balance);
+  const canSubmit =
+    username.trim() &&
+    password.length >= 5 &&
+    !Number.isNaN(numericBalance) &&
+    numericBalance >= 0;
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -25,12 +31,14 @@ export default function CreateUserFormFeature() {
       {
         username: username.trim(),
         password,
+        balance: numericBalance,
       },
       {
         onSuccess() {
           toast.success(t('users.toasts.created'));
           setUsername('');
           setPassword('');
+          setBalance('');
         },
       },
     );
@@ -63,6 +71,20 @@ export default function CreateUserFormFeature() {
           <p className="mt-1.5 text-xs text-gray-500 dark:text-gray-400">
             {t('users.passwordHint')}
           </p>
+        </div>
+
+        <div>
+          <Label htmlFor="user-balance">{t('users.balance')}</Label>
+          <Input
+            id="user-balance"
+            type="number"
+            min="0"
+            step={0.01}
+            value={balance}
+            onChange={(event) => setBalance(event.target.value)}
+            placeholder={t('users.balancePlaceholder')}
+            disabled={createUser.isPending}
+          />
         </div>
 
         <div className="flex justify-end">

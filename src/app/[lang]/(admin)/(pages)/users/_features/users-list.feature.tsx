@@ -28,22 +28,28 @@ export default function UsersListFeature({ users }: UsersListFeatureProps) {
 
   const [editingId, setEditingId] = useState<string | null>(null);
   const [username, setUsername] = useState('');
+  const [balance, setBalance] = useState('');
 
   const startEdit = (user: BasicUser) => {
     setEditingId(user.id);
     setUsername(user.username);
+    setBalance(String(user.balance));
   };
 
   const cancelEdit = () => {
     setEditingId(null);
     setUsername('');
+    setBalance('');
   };
 
   const saveUser = (id: string) => {
+    const numericBalance = Number(balance);
+
     updateUser.mutate(
       {
         id,
         username: username.trim(),
+        balance: numericBalance,
       },
       {
         onSuccess() {
@@ -66,6 +72,12 @@ export default function UsersListFeature({ users }: UsersListFeatureProps) {
     });
   };
 
+  const numericBalance = Number(balance);
+  const canSave =
+    username.trim() &&
+    balance !== '' &&
+    !Number.isNaN(numericBalance) &&
+    numericBalance >= 0;
   const isPending = updateUser.isPending || deleteUser.isPending;
 
   return (
@@ -80,6 +92,12 @@ export default function UsersListFeature({ users }: UsersListFeatureProps) {
                   className="px-5 py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400"
                 >
                   {t('users.username')}
+                </TableCell>
+                <TableCell
+                  isHeader
+                  className="px-5 py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400"
+                >
+                  {t('users.balance')}
                 </TableCell>
                 <TableCell
                   isHeader
@@ -104,6 +122,7 @@ export default function UsersListFeature({ users }: UsersListFeatureProps) {
                   </TableCell>
                   <TableCell className="px-5 py-6"> </TableCell>
                   <TableCell className="px-5 py-6"> </TableCell>
+                  <TableCell className="px-5 py-6"> </TableCell>
                 </TableRow>
               ) : (
                 users.map((user) => {
@@ -126,6 +145,21 @@ export default function UsersListFeature({ users }: UsersListFeatureProps) {
                         )}
                       </TableCell>
                       <TableCell className="px-5 py-4 text-start text-sm text-gray-500 dark:text-gray-400">
+                        {isEditing ? (
+                          <input
+                            type="number"
+                            min="0"
+                            step={0.01}
+                            value={balance}
+                            onChange={(event) => setBalance(event.target.value)}
+                            className="h-9 w-28 rounded-lg border border-gray-300 bg-transparent px-3 text-sm text-gray-800 focus:border-brand-300 focus:outline-hidden focus:ring-3 focus:ring-brand-500/10 dark:border-gray-700 dark:bg-gray-900 dark:text-white/90"
+                            disabled={isPending}
+                          />
+                        ) : (
+                          user.balance
+                        )}
+                      </TableCell>
+                      <TableCell className="px-5 py-4 text-start text-sm text-gray-500 dark:text-gray-400">
                         {new Date(user.createdAt).toLocaleString()}
                       </TableCell>
                       <TableCell className="px-5 py-4 text-end text-sm">
@@ -135,7 +169,7 @@ export default function UsersListFeature({ users }: UsersListFeatureProps) {
                               <button
                                 type="button"
                                 className="font-medium text-brand-500 hover:text-brand-600 disabled:opacity-50"
-                                disabled={isPending || !username.trim()}
+                                disabled={isPending || !canSave}
                                 onClick={() => saveUser(user.id)}
                               >
                                 {t('users.save')}
