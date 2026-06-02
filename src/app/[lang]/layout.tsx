@@ -1,16 +1,11 @@
 import { Outfit } from 'next/font/google';
 import '../globals.css';
 import 'flatpickr/dist/flatpickr.css';
-import { SidebarProvider } from '@/context/SidebarContext';
-import { ThemeProvider } from '@/context/ThemeContext';
-import { Toaster } from 'react-hot-toast';
-import { QueryClientProvider } from '@tanstack/react-query';
-import BasicQueryClient from '@/shared/api/core/basic-query.client';
-import OwnUserProvider from '@/shared/providers/own-user/own-user.provider';
 import { ReactNode } from 'react';
 import { Providers } from '@/app/[lang]/providers';
-import { getDictionary, Locale } from '@/app/[lang]/dictionaries';
+import { getDictionary, hasLocale } from '@/app/[lang]/dictionaries';
 import type { Metadata } from 'next';
+import { notFound } from 'next/navigation';
 
 const outfit = Outfit({
   subsets: ['latin'],
@@ -19,7 +14,7 @@ const outfit = Outfit({
 export interface RootLayoutProps {
   children: ReactNode;
   params: Promise<{
-    lang: Locale;
+    lang: string;
   }>;
 }
 
@@ -32,6 +27,10 @@ export default async function RootLayout({
   params,
 }: RootLayoutProps) {
   const { lang } = await params;
+
+  if (!hasLocale(lang)) {
+    notFound();
+  }
 
   const dictionary = await getDictionary(lang);
 
