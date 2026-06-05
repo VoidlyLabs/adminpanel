@@ -2,10 +2,12 @@
 
 import ComponentCard from '@/components/common/ComponentCard';
 import { useCategory } from '@/shared/api/services/category/category.queries';
+import { Product } from '@/shared/api/services/products/products.model';
 import { useProducts } from '@/shared/api/services/products/products.queries';
 import { useT } from '@/shared/hooks/use-t/use-t.hook';
 import FetchProvider from '@/shared/providers/fetch-provider/fetch.provider';
-import CreateProductFormFeature from '../../_features/create-product-form.feature';
+import { useState } from 'react';
+import ProductFormFeature from '../../_features/product-form.feature';
 import ProductsListFeature from '../../_features/products-list.feature';
 
 interface CategoryDetailsContentProps {
@@ -18,6 +20,7 @@ export default function CategoryDetailsContent({
   const category = useCategory(categoryId);
   const products = useProducts();
   const t = useT();
+  const [editingProduct, setEditingProduct] = useState<Product | null>(null);
 
   return (
     <FetchProvider
@@ -39,8 +42,17 @@ export default function CategoryDetailsContent({
             return (
               <div className="grid grid-cols-1 gap-6 xl:grid-cols-3">
                 <div className="space-y-6 xl:col-span-2">
-                  <ProductsListFeature products={categoryProducts} />
-                  <CreateProductFormFeature categoryId={categoryId} />
+                  <ProductsListFeature
+                    products={categoryProducts}
+                    editingProductId={editingProduct?.id}
+                    onEdit={setEditingProduct}
+                  />
+                  <ProductFormFeature
+                    key={editingProduct?.id ?? 'add-product'}
+                    categoryId={categoryId}
+                    editingProduct={editingProduct}
+                    onCancelEdit={() => setEditingProduct(null)}
+                  />
                 </div>
 
                 <ComponentCard title={t('category.selectedCategory')}>

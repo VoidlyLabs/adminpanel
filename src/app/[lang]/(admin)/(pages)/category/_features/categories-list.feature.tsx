@@ -9,50 +9,24 @@ import {
   TableRow,
 } from '@/components/ui/table';
 import { Category } from '@/shared/api/services/category/category.model';
-import {
-  useDeleteCategory,
-  useUpdateCategory,
-} from '@/shared/api/services/category/category.queries';
+import { useDeleteCategory } from '@/shared/api/services/category/category.queries';
 import { useT } from '@/shared/hooks/use-t/use-t.hook';
 import Link from 'next/link';
-import { useState } from 'react';
 import toast from 'react-hot-toast';
 
 interface CategoriesListFeatureProps {
   categories: Category[];
+  onEdit: (category: Category) => void;
+  editingCategoryId?: string | null;
 }
 
 export default function CategoriesListFeature({
   categories,
+  onEdit,
+  editingCategoryId,
 }: CategoriesListFeatureProps) {
   const t = useT();
-  const updateCategory = useUpdateCategory();
   const deleteCategory = useDeleteCategory();
-
-  const [editingId, setEditingId] = useState<string | null>(null);
-  const [name, setName] = useState('');
-
-  const startEdit = (category: Category) => {
-    setEditingId(category.id);
-    setName(category.name);
-  };
-
-  const cancelEdit = () => {
-    setEditingId(null);
-    setName('');
-  };
-
-  const saveCategory = (id: string) => {
-    updateCategory.mutate(
-      { id, name: name.trim() },
-      {
-        onSuccess() {
-          toast.success(t('category.toasts.categoryUpdated'));
-          cancelEdit();
-        },
-      },
-    );
-  };
 
   const removeCategory = (category: Category) => {
     if (!window.confirm(t('category.confirmDeleteCategory'))) {
@@ -65,8 +39,6 @@ export default function CategoriesListFeature({
       },
     });
   };
-
-  const isPending = updateCategory.isPending || deleteCategory.isPending;
 
   return (
     <ComponentCard title={t('category.categories')}>
@@ -102,64 +74,34 @@ export default function CategoriesListFeature({
                 categories.map((category) => (
                   <TableRow key={category.id}>
                     <TableCell className="px-5 py-4 text-start text-sm font-medium text-gray-800 dark:text-white/90">
-                      {editingId === category.id ? (
-                        <input
-                          value={name}
-                          onChange={(event) => setName(event.target.value)}
-                          className="h-9 w-full rounded-lg border border-gray-300 bg-transparent px-3 text-sm text-gray-800 focus:border-brand-300 focus:outline-hidden focus:ring-3 focus:ring-brand-500/10 dark:border-gray-700 dark:bg-gray-900 dark:text-white/90"
-                          disabled={isPending}
-                        />
-                      ) : (
-                        category.name
-                      )}
+                      {category.name}
                     </TableCell>
                     <TableCell className="px-5 py-4 text-end text-sm text-gray-500 dark:text-gray-400">
                       <div className="flex items-center justify-end gap-3">
-                        {editingId === category.id ? (
-                          <>
-                            <button
-                              type="button"
-                              className="font-medium text-brand-500 hover:text-brand-600 disabled:opacity-50"
-                              disabled={isPending || !name.trim()}
-                              onClick={() => saveCategory(category.id)}
-                            >
-                              {t('category.save')}
-                            </button>
-                            <button
-                              type="button"
-                              className="font-medium text-gray-500 hover:text-gray-700 disabled:opacity-50 dark:hover:text-gray-300"
-                              disabled={isPending}
-                              onClick={cancelEdit}
-                            >
-                              {t('category.cancel')}
-                            </button>
-                          </>
-                        ) : (
-                          <>
-                            <Link
-                              href={`/category/${category.id}`}
-                              className="font-medium text-brand-500 hover:text-brand-600"
-                            >
-                              {t('category.open')}
-                            </Link>
-                            <button
-                              type="button"
-                              className="font-medium text-gray-500 hover:text-gray-700 disabled:opacity-50 dark:hover:text-gray-300"
-                              disabled={isPending}
-                              onClick={() => startEdit(category)}
-                            >
-                              {t('category.edit')}
-                            </button>
-                            <button
-                              type="button"
-                              className="font-medium text-error-500 hover:text-error-600 disabled:opacity-50"
-                              disabled={isPending}
-                              onClick={() => removeCategory(category)}
-                            >
-                              {t('category.delete')}
-                            </button>
-                          </>
-                        )}
+                        <Link
+                          href={`/category/${category.id}`}
+                          className="font-medium text-brand-500 hover:text-brand-600"
+                        >
+                          {t('category.open')}
+                        </Link>
+                        <button
+                          type="button"
+                          className="font-medium text-gray-500 hover:text-gray-700 disabled:opacity-50 dark:hover:text-gray-300"
+                          disabled={deleteCategory.isPending}
+                          onClick={() => onEdit(category)}
+                        >
+                          {editingCategoryId === category.id
+                            ? t('category.editing')
+                            : t('category.edit')}
+                        </button>
+                        <button
+                          type="button"
+                          className="font-medium text-error-500 hover:text-error-600 disabled:opacity-50"
+                          disabled={deleteCategory.isPending}
+                          onClick={() => removeCategory(category)}
+                        >
+                          {t('category.delete')}
+                        </button>
                       </div>
                     </TableCell>
                   </TableRow>
