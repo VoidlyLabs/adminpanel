@@ -9,56 +9,23 @@ import {
   TableRow,
 } from '@/components/ui/table';
 import { BasicUser } from '@/shared/api/services/users/users.model';
-import {
-  useDeleteUser,
-  useUpdateUser,
-} from '@/shared/api/services/users/users.queries';
+import { useDeleteUser } from '@/shared/api/services/users/users.queries';
 import { useT } from '@/shared/hooks/use-t/use-t.hook';
-import { useState } from 'react';
 import toast from 'react-hot-toast';
 
 interface UsersListFeatureProps {
   users: BasicUser[];
+  onEdit: (user: BasicUser) => void;
+  editingUserId?: string | null;
 }
 
-export default function UsersListFeature({ users }: UsersListFeatureProps) {
-  const updateUser = useUpdateUser();
+export default function UsersListFeature({
+  users,
+  onEdit,
+  editingUserId,
+}: UsersListFeatureProps) {
   const deleteUser = useDeleteUser();
   const t = useT();
-
-  const [editingId, setEditingId] = useState<string | null>(null);
-  const [username, setUsername] = useState('');
-  const [balance, setBalance] = useState('');
-
-  const startEdit = (user: BasicUser) => {
-    setEditingId(user.id);
-    setUsername(user.username);
-    setBalance(String(user.balance));
-  };
-
-  const cancelEdit = () => {
-    setEditingId(null);
-    setUsername('');
-    setBalance('');
-  };
-
-  const saveUser = (id: string) => {
-    const numericBalance = Number(balance);
-
-    updateUser.mutate(
-      {
-        id,
-        username: username.trim(),
-        balance: numericBalance,
-      },
-      {
-        onSuccess() {
-          toast.success(t('users.toasts.updated'));
-          cancelEdit();
-        },
-      },
-    );
-  };
 
   const removeUser = (user: BasicUser) => {
     if (!window.confirm(t('users.confirmDelete'))) {
@@ -72,14 +39,6 @@ export default function UsersListFeature({ users }: UsersListFeatureProps) {
     });
   };
 
-  const numericBalance = Number(balance);
-  const canSave =
-    username.trim() &&
-    balance !== '' &&
-    !Number.isNaN(numericBalance) &&
-    numericBalance >= 0;
-  const isPending = updateUser.isPending || deleteUser.isPending;
-
   return (
     <ComponentCard title={t('users.list')}>
       <div className="overflow-hidden rounded-xl border border-gray-200 bg-white dark:border-white/[0.05] dark:bg-white/[0.03]">
@@ -92,12 +51,6 @@ export default function UsersListFeature({ users }: UsersListFeatureProps) {
                   className="px-5 py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400"
                 >
                   {t('users.username')}
-                </TableCell>
-                <TableCell
-                  isHeader
-                  className="px-5 py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400"
-                >
-                  {t('users.balance')}
                 </TableCell>
                 <TableCell
                   isHeader
@@ -122,92 +75,40 @@ export default function UsersListFeature({ users }: UsersListFeatureProps) {
                   </TableCell>
                   <TableCell className="px-5 py-6"> </TableCell>
                   <TableCell className="px-5 py-6"> </TableCell>
-                  <TableCell className="px-5 py-6"> </TableCell>
                 </TableRow>
               ) : (
-                users.map((user) => {
-                  const isEditing = editingId === user.id;
-
-                  return (
-                    <TableRow key={user.id}>
-                      <TableCell className="px-5 py-4 text-start text-sm font-medium text-gray-800 dark:text-white/90">
-                        {isEditing ? (
-                          <input
-                            value={username}
-                            onChange={(event) =>
-                              setUsername(event.target.value)
-                            }
-                            className="h-9 w-full rounded-lg border border-gray-300 bg-transparent px-3 text-sm text-gray-800 focus:border-brand-300 focus:outline-hidden focus:ring-3 focus:ring-brand-500/10 dark:border-gray-700 dark:bg-gray-900 dark:text-white/90"
-                            disabled={isPending}
-                          />
-                        ) : (
-                          user.username
-                        )}
-                      </TableCell>
-                      <TableCell className="px-5 py-4 text-start text-sm text-gray-500 dark:text-gray-400">
-                        {isEditing ? (
-                          <input
-                            type="number"
-                            min="0"
-                            step={0.01}
-                            value={balance}
-                            onChange={(event) => setBalance(event.target.value)}
-                            className="h-9 w-28 rounded-lg border border-gray-300 bg-transparent px-3 text-sm text-gray-800 focus:border-brand-300 focus:outline-hidden focus:ring-3 focus:ring-brand-500/10 dark:border-gray-700 dark:bg-gray-900 dark:text-white/90"
-                            disabled={isPending}
-                          />
-                        ) : (
-                          user.balance
-                        )}
-                      </TableCell>
-                      <TableCell className="px-5 py-4 text-start text-sm text-gray-500 dark:text-gray-400">
-                        {new Date(user.createdAt).toLocaleString()}
-                      </TableCell>
-                      <TableCell className="px-5 py-4 text-end text-sm">
-                        <div className="flex items-center justify-end gap-3">
-                          {isEditing ? (
-                            <>
-                              <button
-                                type="button"
-                                className="font-medium text-brand-500 hover:text-brand-600 disabled:opacity-50"
-                                disabled={isPending || !canSave}
-                                onClick={() => saveUser(user.id)}
-                              >
-                                {t('users.save')}
-                              </button>
-                              <button
-                                type="button"
-                                className="font-medium text-gray-500 hover:text-gray-700 disabled:opacity-50 dark:hover:text-gray-300"
-                                disabled={isPending}
-                                onClick={cancelEdit}
-                              >
-                                {t('users.cancel')}
-                              </button>
-                            </>
-                          ) : (
-                            <>
-                              <button
-                                type="button"
-                                className="font-medium text-gray-500 hover:text-gray-700 disabled:opacity-50 dark:hover:text-gray-300"
-                                disabled={isPending}
-                                onClick={() => startEdit(user)}
-                              >
-                                {t('users.edit')}
-                              </button>
-                              <button
-                                type="button"
-                                className="font-medium text-error-500 hover:text-error-600 disabled:opacity-50"
-                                disabled={isPending}
-                                onClick={() => removeUser(user)}
-                              >
-                                {t('users.delete')}
-                              </button>
-                            </>
-                          )}
-                        </div>
-                      </TableCell>
-                    </TableRow>
-                  );
-                })
+                users.map((user) => (
+                  <TableRow key={user.id}>
+                    <TableCell className="px-5 py-4 text-start text-sm font-medium text-gray-800 dark:text-white/90">
+                      {user.username}
+                    </TableCell>
+                    <TableCell className="px-5 py-4 text-start text-sm text-gray-500 dark:text-gray-400">
+                      {new Date(user.createdAt).toLocaleString()}
+                    </TableCell>
+                    <TableCell className="px-5 py-4 text-end text-sm">
+                      <div className="flex items-center justify-end gap-3">
+                        <button
+                          type="button"
+                          className="font-medium text-gray-500 hover:text-gray-700 disabled:opacity-50 dark:hover:text-gray-300"
+                          disabled={deleteUser.isPending}
+                          onClick={() => onEdit(user)}
+                        >
+                          {editingUserId === user.id
+                            ? t('users.editing')
+                            : t('users.edit')}
+                        </button>
+                        <button
+                          type="button"
+                          className="font-medium text-error-500 hover:text-error-600 disabled:opacity-50"
+                          disabled={deleteUser.isPending}
+                          onClick={() => removeUser(user)}
+                        >
+                          {t('users.delete')}
+                        </button>
+                      </div>
+                    </TableCell>
+                  </TableRow>
+                ))
               )}
             </TableBody>
           </Table>

@@ -1,12 +1,15 @@
 'use client';
 
+import { BasicUser } from '@/shared/api/services/users/users.model';
 import { useUsers } from '@/shared/api/services/users/users.queries';
 import FetchProvider from '@/shared/providers/fetch-provider/fetch.provider';
-import CreateUserFormFeature from '../_features/create-user-form.feature';
+import { useState } from 'react';
+import UserFormFeature from '../_features/user-form.feature';
 import UsersListFeature from '../_features/users-list.feature';
 
 export default function UsersContent() {
   const users = useUsers();
+  const [editingUser, setEditingUser] = useState<BasicUser | null>(null);
 
   return (
     <FetchProvider
@@ -17,10 +20,18 @@ export default function UsersContent() {
       {(response) => (
         <div className="grid grid-cols-1 gap-6 xl:grid-cols-3">
           <div className="xl:col-span-2">
-            <UsersListFeature users={response.data.body} />
+            <UsersListFeature
+              users={response.data.body}
+              editingUserId={editingUser?.id}
+              onEdit={setEditingUser}
+            />
           </div>
 
-          <CreateUserFormFeature />
+          <UserFormFeature
+            key={editingUser?.id ?? 'add-user'}
+            editingUser={editingUser}
+            onCancelEdit={() => setEditingUser(null)}
+          />
         </div>
       )}
     </FetchProvider>
