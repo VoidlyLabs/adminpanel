@@ -28,7 +28,7 @@
     "clsx": "^2.1.1",
     "debounce": "^3.0.0",
     "flatpickr": "^4.6.13",
-    "next": "^16.1.6",
+    "next": "^16.2.6",
     "react": "^19.2.0",
     "react-apexcharts": "^1.8.0",
     "react-dnd": "^16.0.1",
