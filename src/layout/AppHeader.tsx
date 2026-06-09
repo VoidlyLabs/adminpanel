@@ -3,9 +3,9 @@ import { ThemeToggleButton } from '@/components/common/ThemeToggleButton';
 import { LanguageToggleButton } from '@/components/common/LanguageToggleButton';
 import UserDropdown from '@/components/header/UserDropdown';
 import { useSidebar } from '@/context/SidebarContext';
-import Link from 'next/link';
 import React, { useState, useEffect, useRef } from 'react';
 import { useT } from '@/shared/hooks/use-t/use-t.hook';
+import LocalizedLink from '@/shared/ui/localized-link/localized-link';
 
 const AppHeader: React.FC = () => {
   const [isApplicationMenuOpen, setApplicationMenuOpen] = useState(false);
@@ -84,7 +84,7 @@ const AppHeader: React.FC = () => {
             {/* Cross Icon */}
           </button>
 
-          <Link href="/" className="lg:hidden">
+          <LocalizedLink href="/" className="lg:hidden">
             <div className={'w-full items-center text-center justify-center'}>
               <span
                 className={
@@ -94,7 +94,7 @@ const AppHeader: React.FC = () => {
                 {t('sidebar.brandName')}
               </span>
             </div>
-          </Link>
+          </LocalizedLink>
 
           <button
             onClick={toggleApplicationMenu}

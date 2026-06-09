@@ -1,5 +1,5 @@
-import Link from 'next/link';
 import React from 'react';
+import LocalizedLink from '@/shared/ui/localized-link/localized-link';
 
 interface AlertProps {
   variant: 'success' | 'error' | 'warning' | 'info'; // Alert type
@@ -129,12 +129,12 @@ const Alert: React.FC<AlertProps> = ({
           <p className="text-sm text-gray-500 dark:text-gray-400">{message}</p>
 
           {showLink && (
-            <Link
+            <LocalizedLink
               href={linkHref}
               className="inline-block mt-3 text-sm font-medium text-gray-500 underline dark:text-gray-400"
             >
               {linkText}
-            </Link>
+            </LocalizedLink>
           )}
         </div>
       </div>

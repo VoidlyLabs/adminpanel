@@ -1,8 +1,8 @@
 'use client';
 
-import Link from 'next/link';
 import React from 'react';
 import { useT } from '@/shared/hooks/use-t/use-t.hook';
+import LocalizedLink from '@/shared/ui/localized-link/localized-link';
 
 interface BreadcrumbProps {
   pageTitle: string;
@@ -22,7 +22,7 @@ const PageBreadcrumb: React.FC<BreadcrumbProps> = ({ pageTitle }) => {
       <nav>
         <ol className="flex items-center gap-1.5">
           <li>
-            <Link
+            <LocalizedLink
               className="inline-flex items-center gap-1.5 text-sm text-gray-500 dark:text-gray-400"
               href="/"
             >
@@ -43,7 +43,7 @@ const PageBreadcrumb: React.FC<BreadcrumbProps> = ({ pageTitle }) => {
                   strokeLinejoin="round"
                 />
               </svg>
-            </Link>
+            </LocalizedLink>
           </li>
           <li className="text-sm text-gray-800 dark:text-white/90">
             {pageTitle}

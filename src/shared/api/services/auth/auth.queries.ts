@@ -24,13 +24,15 @@ export const useSignIn = () => {
   });
 };
 
-export const useSignOut = () =>
-  useMutation({
+export const useSignOut = () => {
+  const { lang } = useI18n();
+
+  return useMutation({
     mutationKey: ['authSignOut'],
     mutationFn: AuthService.signOut,
 
     onSuccess() {
-      window.location.replace('/signin');
+      window.location.replace(`/${lang}/signin`);
     },
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -40,6 +42,7 @@ export const useSignOut = () =>
       console.error(error);
     },
   });
+};
 
 export const useMe = () =>
   useQuery({

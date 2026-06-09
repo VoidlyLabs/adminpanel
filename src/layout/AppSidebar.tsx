@@ -1,11 +1,12 @@
 'use client';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useSidebar } from '../context/SidebarContext';
 import { ChevronDown, Settings, ShoppingBag, User } from 'react-feather';
 import { HorizontalDots } from '@/icons';
 import { useT } from '@/shared/hooks/use-t/use-t.hook';
+import LocalizedLink from '@/shared/ui/localized-link/localized-link';
+import { stripLocaleFromPath } from '@/shared/lib/localized-path.utils';
 
 type NavItem = {
   nameKey: string;
@@ -84,7 +85,7 @@ const AppSidebar: React.FC = () => {
             </button>
           ) : (
             nav.path && (
-              <Link
+              <LocalizedLink
                 href={nav.path}
                 className={`menu-item group ${
                   isActive(nav.path) ? 'menu-item-active' : 'menu-item-inactive'
@@ -102,7 +103,7 @@ const AppSidebar: React.FC = () => {
                 {(isExpanded || isHovered || isMobileOpen) && (
                   <span className={`menu-item-text`}>{t(nav.nameKey)}</span>
                 )}
-              </Link>
+              </LocalizedLink>
             )
           )}
           {nav.subItems && (isExpanded || isHovered || isMobileOpen) && (
@@ -121,7 +122,7 @@ const AppSidebar: React.FC = () => {
               <ul className="mt-2 space-y-1 ml-9">
                 {nav.subItems.map((subItem) => (
                   <li key={subItem.nameKey}>
-                    <Link
+                    <LocalizedLink
                       href={subItem.path}
                       className={`menu-dropdown-item ${
                         isActive(subItem.path)
@@ -154,7 +155,7 @@ const AppSidebar: React.FC = () => {
                           </span>
                         )}
                       </span>
-                    </Link>
+                    </LocalizedLink>
                   </li>
                 ))}
               </ul>
@@ -175,7 +176,10 @@ const AppSidebar: React.FC = () => {
   const subMenuRefs = useRef<Record<string, HTMLDivElement | null>>({});
 
   // const isActive = (path: string) => path === pathname;
-  const isActive = useCallback((path: string) => path === pathname, [pathname]);
+  const isActive = useCallback(
+    (path: string) => path === stripLocaleFromPath(pathname),
+    [pathname],
+  );
 
   useEffect(() => {
     // Check if the current path matches any submenu item
@@ -249,7 +253,7 @@ const AppSidebar: React.FC = () => {
           !isExpanded && !isHovered ? 'lg:justify-center' : 'justify-start'
         }`}
       >
-        <Link href="/">
+        <LocalizedLink href="/">
           {isExpanded || isHovered || isMobileOpen ? (
             <div className={'w-full items-center text-center justify-center'}>
               <span
@@ -271,7 +275,7 @@ const AppSidebar: React.FC = () => {
               </span>
             </div>
           )}
-        </Link>
+        </LocalizedLink>
       </div>
       <div className="flex flex-col overflow-y-auto duration-300 ease-linear no-scrollbar">
         <nav className="mb-6">

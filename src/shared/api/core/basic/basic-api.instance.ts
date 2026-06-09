@@ -1,4 +1,8 @@
 import axios, { AxiosInstance } from 'axios';
+import {
+  localizePathFromWindow,
+  stripLocaleFromPath,
+} from '@/shared/lib/localized-path.utils';
 
 export const BasicAPI: AxiosInstance = axios.create({
   baseURL: process.env.NEXT_PUBLIC_BACKEND_URL,
@@ -37,9 +41,9 @@ BasicAPI.interceptors.response.use(
 
       if (
         typeof window !== 'undefined' &&
-        window.location.pathname !== '/signin'
+        stripLocaleFromPath(window.location.pathname) !== '/signin'
       ) {
-        window.location.replace('/signin');
+        window.location.replace(localizePathFromWindow('/signin'));
       }
     }
 

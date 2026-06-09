@@ -3,9 +3,9 @@ import Checkbox from '@/components/form/input/Checkbox';
 import Input from '@/components/form/input/InputField';
 import Label from '@/components/form/Label';
 import { EyeCloseIcon, EyeIcon } from '@/icons';
-import Link from 'next/link';
 import React, { useState } from 'react';
 import { useT } from '@/shared/hooks/use-t/use-t.hook';
+import LocalizedLink from '@/shared/ui/localized-link/localized-link';
 
 export default function SignUpForm() {
   const [showPassword, setShowPassword] = useState(false);
@@ -173,12 +173,12 @@ export default function SignUpForm() {
             <div className="mt-5">
               <p className="text-sm font-normal text-center text-gray-700 dark:text-gray-400 sm:text-start">
                 {t('auth.signUp.alreadyHaveAccount')}
-                <Link
+                <LocalizedLink
                   href="/signin"
                   className="text-brand-500 hover:text-brand-600 dark:text-brand-400"
                 >
                   {t('auth.signUp.signIn')}
-                </Link>
+                </LocalizedLink>
               </p>
             </div>
           </div>

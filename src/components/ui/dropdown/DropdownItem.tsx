@@ -1,5 +1,5 @@
 import type React from 'react';
-import Link from 'next/link';
+import LocalizedLink from '@/shared/ui/localized-link/localized-link';
 
 interface DropdownItemProps {
   tag?: 'a' | 'button';
@@ -32,9 +32,13 @@ export const DropdownItem: React.FC<DropdownItemProps> = ({
 
   if (tag === 'a' && href) {
     return (
-      <Link href={href} className={combinedClasses} onClick={handleClick}>
+      <LocalizedLink
+        href={href}
+        className={combinedClasses}
+        onClick={handleClick}
+      >
         {children}
-      </Link>
+      </LocalizedLink>
     );
   }
 
