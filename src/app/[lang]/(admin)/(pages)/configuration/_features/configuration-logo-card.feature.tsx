@@ -10,6 +10,7 @@ import {
 } from '@/shared/api/services/configuration/configuration.queries';
 import { BasicConfiguration } from '@/shared/api/services/configuration/configuration.model';
 import { useT } from '@/shared/hooks/use-t/use-t.hook';
+import { useI18n } from '@/shared/providers/i18n/i18n.context';
 import ImageLoader from '@/shared/ui/image-loader/image-loader';
 import { useState } from 'react';
 import toast from 'react-hot-toast';
@@ -23,6 +24,7 @@ export default function ConfigurationLogoCardFeature({
 }: ConfigurationLogoCardProps) {
   const updateConfigurationLogo = useUpdateConfigurationLogo();
   const deleteConfigurationLogo = useDeleteConfigurationLogo();
+  const { lang } = useI18n();
   const t = useT();
 
   const [logo, setLogo] = useState<File | null>(null);
@@ -80,7 +82,7 @@ export default function ConfigurationLogoCardFeature({
           {configuration.logoUrl ? (
             <ImageLoader
               src={configuration.logoUrl}
-              alt={`${configuration.name} ${t('configuration.logoAltSuffix')}`}
+              alt={`${configuration.name[lang] ?? ''} ${t('configuration.logoAltSuffix')}`}
               className="h-full w-full object-contain"
               width={500}
               height={500}

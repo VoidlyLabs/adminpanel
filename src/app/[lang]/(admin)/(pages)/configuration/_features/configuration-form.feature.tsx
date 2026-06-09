@@ -28,8 +28,14 @@ export default function ConfigurationFormFeature({
   const [form, setForm] = useState<Configuration_Update_Request | null>(null);
 
   const currentConfiguration = {
-    name: form?.name ?? configuration.name,
-    description: form?.description ?? configuration.description,
+    name: {
+      uk: form?.name?.uk ?? configuration.name.uk ?? '',
+      en: form?.name?.en ?? configuration.name.en ?? '',
+    },
+    description: {
+      uk: form?.description?.uk ?? configuration.description.uk ?? '',
+      en: form?.description?.en ?? configuration.description.en ?? '',
+    },
     accentColor: form?.accentColor ?? configuration.accentColor,
     backgroundColor: form?.backgroundColor ?? configuration.backgroundColor,
     secondaryColor: form?.secondaryColor ?? configuration.secondaryColor,
@@ -44,6 +50,20 @@ export default function ConfigurationFormFeature({
     setForm((previousForm) => ({
       ...(previousForm ?? {}),
       [key]: value,
+    }));
+  };
+
+  const setLocalizedField = (
+    key: 'name' | 'description',
+    locale: 'en' | 'uk',
+    value: string,
+  ) => {
+    setForm((previousForm) => ({
+      ...(previousForm ?? {}),
+      [key]: {
+        ...(previousForm?.[key] ?? {}),
+        [locale]: value,
+      },
     }));
   };
 
@@ -79,21 +99,51 @@ export default function ConfigurationFormFeature({
     <ComponentCard title={t('configuration.basicInformation')}>
       <form className="space-y-6" onSubmit={handleSubmit}>
         <div>
-          <Label htmlFor="configuration-name">{t('configuration.name')}</Label>
+          <Label htmlFor="configuration-name-en">
+            {t('configuration.configurationName.en')}
+          </Label>
           <Input
-            id="configuration-name"
-            value={currentConfiguration.name}
-            onChange={(event) => setField('name', event.target.value)}
+            id="configuration-name-en"
+            value={currentConfiguration.name.en}
+            onChange={(event) =>
+              setLocalizedField('name', 'en', event.target.value)
+            }
             placeholder={t('configuration.namePlaceholder')}
             disabled={updateConfiguration.isPending}
           />
         </div>
 
         <div>
-          <Label>{t('configuration.description')}</Label>
+          <Label htmlFor="configuration-name-uk">
+            {t('configuration.configurationName.uk')}
+          </Label>
+          <Input
+            id="configuration-name-uk"
+            value={currentConfiguration.name.uk}
+            onChange={(event) =>
+              setLocalizedField('name', 'uk', event.target.value)
+            }
+            placeholder={t('configuration.namePlaceholder')}
+            disabled={updateConfiguration.isPending}
+          />
+        </div>
+
+        <div>
+          <Label>{t('configuration.configurationDescription.en')}</Label>
           <TextArea
-            value={currentConfiguration.description}
-            onChange={(value) => setField('description', value)}
+            value={currentConfiguration.description.en}
+            onChange={(value) => setLocalizedField('description', 'en', value)}
+            placeholder={t('configuration.descriptionPlaceholder')}
+            rows={6}
+            disabled={updateConfiguration.isPending}
+          />
+        </div>
+
+        <div>
+          <Label>{t('configuration.configurationDescription.uk')}</Label>
+          <TextArea
+            value={currentConfiguration.description.uk}
+            onChange={(value) => setLocalizedField('description', 'uk', value)}
             placeholder={t('configuration.descriptionPlaceholder')}
             rows={6}
             disabled={updateConfiguration.isPending}

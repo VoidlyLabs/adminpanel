@@ -65,8 +65,18 @@
     "basicInformation": "Basic information",
     "name": "Name",
     "namePlaceholder": "Enter project name",
+    "configurationName": {
+      "uk": "Project name in Ukrainian",
+      "en": "Project name in English",
+      "default": "Name"
+    },
     "description": "Description",
     "descriptionPlaceholder": "Enter project description",
+    "configurationDescription": {
+      "uk": "Project description in Ukrainian",
+      "en": "Project description in English",
+      "default": "Description"
+    },
     "accentColor": "Accent color",
     "backgroundColor": "Background color",
     "secondaryColor": "Secondary color",

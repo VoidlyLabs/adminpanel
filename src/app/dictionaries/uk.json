@@ -65,8 +65,18 @@
     "basicInformation": "Основна інформація",
     "name": "Назва",
     "namePlaceholder": "Введіть назву проєкту",
+    "configurationName": {
+      "uk": "Назва проєкту українською",
+      "en": "Назва проєкту англійською",
+      "default": "Назва"
+    },
     "description": "Опис",
     "descriptionPlaceholder": "Введіть опис проєкту",
+    "configurationDescription": {
+      "uk": "Опис проєкту українською",
+      "en": "Опис проєкту англійською",
+      "default": "Опис"
+    },
     "accentColor": "Акцентний колір",
     "backgroundColor": "Колір фону",
     "secondaryColor": "Другорядний колір",

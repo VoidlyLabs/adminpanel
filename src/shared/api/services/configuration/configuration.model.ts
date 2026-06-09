@@ -2,8 +2,14 @@ import { BasicAPIResponse } from '@/shared/api/core/basic/basic.models';
 import { AxiosResponse } from 'axios';
 
 export interface BasicConfiguration {
-  name: string;
-  description: string;
+  name: {
+    uk?: string;
+    en?: string;
+  };
+  description: {
+    uk?: string;
+    en?: string;
+  };
   logoUrl: string;
   accentColor: string;
   backgroundColor: string;
