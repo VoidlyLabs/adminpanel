@@ -2,8 +2,11 @@ import { BasicAPIResponse } from '@/shared/api/core/basic/basic.models';
 import { AxiosResponse } from 'axios';
 
 export interface Category {
-  id: string;
-  name: string;
+  _id: string;
+  name: {
+    uk?: string;
+    en?: string;
+  };
   createdAt: string;
   updatedAt: string;
 }
@@ -11,7 +14,7 @@ export interface Category {
 // Requests
 
 export type Category_Create_Request = Pick<Category, 'name'>;
-export type Category_Update_Request = Pick<Category, 'id' | 'name'>;
+export type Category_Update_Request = Pick<Category, '_id' | 'name'>;
 
 // Responses
 

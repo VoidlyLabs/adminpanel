@@ -10,14 +10,14 @@ export class CategoryService {
   static find(): Promise<Category_List_Response> {
     return AuthAPI.request({
       method: 'GET',
-      url: '/common/category',
+      url: '/admin/category',
     });
   }
 
   static findById(id: string): Promise<Category_Response> {
     return AuthAPI.request({
       method: 'GET',
-      url: `/common/category/${id}`,
+      url: `/admin/category/${id}`,
     });
   }
 
@@ -30,11 +30,11 @@ export class CategoryService {
   }
 
   static update(data: Category_Update_Request): Promise<Category_Response> {
-    const { id, ...body } = data;
+    const { _id, ...body } = data;
 
     return AuthAPI.request({
       method: 'PATCH',
-      url: `/admin/category/${id}`,
+      url: `/admin/category/${_id}`,
       data: body,
     });
   }

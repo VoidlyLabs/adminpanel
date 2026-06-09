@@ -11,7 +11,8 @@ import {
 import { Category } from '@/shared/api/services/category/category.model';
 import { useDeleteCategory } from '@/shared/api/services/category/category.queries';
 import { useT } from '@/shared/hooks/use-t/use-t.hook';
-import Link from 'next/link';
+import { useI18n } from '@/shared/providers/i18n/i18n.context';
+import LocalizedLink from '@/shared/ui/localized-link/localized-link';
 import toast from 'react-hot-toast';
 
 interface CategoriesListFeatureProps {
@@ -25,6 +26,7 @@ export default function CategoriesListFeature({
   onEdit,
   editingCategoryId,
 }: CategoriesListFeatureProps) {
+  const { lang } = useI18n();
   const t = useT();
   const deleteCategory = useDeleteCategory();
 
@@ -33,7 +35,7 @@ export default function CategoriesListFeature({
       return;
     }
 
-    deleteCategory.mutate(category.id, {
+    deleteCategory.mutate(category._id, {
       onSuccess() {
         toast.success(t('category.toasts.categoryDeleted'));
       },
@@ -51,7 +53,7 @@ export default function CategoriesListFeature({
                   isHeader
                   className="px-5 py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400"
                 >
-                  {t('category.name')}
+                  {t('category.categoryName.default')}
                 </TableCell>
                 <TableCell
                   isHeader
@@ -72,25 +74,25 @@ export default function CategoriesListFeature({
                 </TableRow>
               ) : (
                 categories.map((category) => (
-                  <TableRow key={category.id}>
+                  <TableRow key={category._id}>
                     <TableCell className="px-5 py-4 text-start text-sm font-medium text-gray-800 dark:text-white/90">
-                      {category.name}
+                      {category.name[lang]}
                     </TableCell>
                     <TableCell className="px-5 py-4 text-end text-sm text-gray-500 dark:text-gray-400">
                       <div className="flex items-center justify-end gap-3">
-                        <Link
-                          href={`/category/${category.id}`}
+                        <LocalizedLink
+                          href={`/category/${category._id}`}
                           className="font-medium text-brand-500 hover:text-brand-600"
                         >
                           {t('category.open')}
-                        </Link>
+                        </LocalizedLink>
                         <button
                           type="button"
                           className="font-medium text-gray-500 hover:text-gray-700 disabled:opacity-50 dark:hover:text-gray-300"
                           disabled={deleteCategory.isPending}
                           onClick={() => onEdit(category)}
                         >
-                          {editingCategoryId === category.id
+                          {editingCategoryId === category._id
                             ? t('category.editing')
                             : t('category.edit')}
                         </button>

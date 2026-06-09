@@ -26,13 +26,16 @@ export default function CategoryFormFeature({
   const updateCategory = useUpdateCategory();
   const t = useT();
 
-  const [name, setName] = useState(editingCategory?.name ?? '');
+  const [ukName, ukSetName] = useState(editingCategory?.name.uk ?? '');
+  const [enName, enSetName] = useState(editingCategory?.name.en ?? '');
 
   const isEditMode = Boolean(editingCategory);
   const isPending = createCategory.isPending || updateCategory.isPending;
+  const canSubmit = Boolean(enName.trim());
 
   const resetForm = () => {
-    setName('');
+    enSetName('');
+    ukSetName('');
   };
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
@@ -41,8 +44,11 @@ export default function CategoryFormFeature({
     if (editingCategory) {
       updateCategory.mutate(
         {
-          id: editingCategory.id,
-          name: name.trim(),
+          _id: editingCategory._id,
+          name: {
+            uk: ukName.trim(),
+            en: enName.trim(),
+          },
         },
         {
           onSuccess() {
@@ -58,7 +64,10 @@ export default function CategoryFormFeature({
 
     createCategory.mutate(
       {
-        name: name.trim(),
+        name: {
+          uk: ukName.trim(),
+          en: enName.trim(),
+        },
       },
       {
         onSuccess() {
@@ -83,11 +92,26 @@ export default function CategoryFormFeature({
     >
       <form className="space-y-6" onSubmit={handleSubmit}>
         <div>
-          <Label htmlFor="category-name">{t('category.name')}</Label>
+          <Label htmlFor="category-name-en">
+            {t('category.categoryName.en')}
+          </Label>
           <Input
-            id="category-name"
-            value={name}
-            onChange={(event) => setName(event.target.value)}
+            id="category-name-en"
+            value={enName}
+            onChange={(event) => enSetName(event.target.value)}
+            placeholder={t('category.namePlaceholder')}
+            disabled={isPending}
+          />
+        </div>
+
+        <div>
+          <Label htmlFor="category-name-uk">
+            {t('category.categoryName.uk')}
+          </Label>
+          <Input
+            id="category-name-uk"
+            value={ukName}
+            onChange={(event) => ukSetName(event.target.value)}
             placeholder={t('category.namePlaceholder')}
             disabled={isPending}
           />
@@ -105,7 +129,7 @@ export default function CategoryFormFeature({
               {t('category.cancel')}
             </Button>
           )}
-          <Button size="sm" disabled={isPending || !name.trim()}>
+          <Button size="sm" disabled={isPending || !canSubmit}>
             {isPending
               ? isEditMode
                 ? t('category.saving')

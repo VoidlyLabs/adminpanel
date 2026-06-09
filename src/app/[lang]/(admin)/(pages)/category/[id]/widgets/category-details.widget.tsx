@@ -5,6 +5,7 @@ import { useCategory } from '@/shared/api/services/category/category.queries';
 import { Product } from '@/shared/api/services/products/products.model';
 import { useProducts } from '@/shared/api/services/products/products.queries';
 import { useT } from '@/shared/hooks/use-t/use-t.hook';
+import { useI18n } from '@/shared/providers/i18n/i18n.context';
 import FetchProvider from '@/shared/providers/fetch-provider/fetch.provider';
 import { useState } from 'react';
 import ProductFormFeature from '../../_features/product-form.feature';
@@ -19,6 +20,7 @@ export default function CategoryDetailsContent({
 }: CategoryDetailsContentProps) {
   const category = useCategory(categoryId);
   const products = useProducts();
+  const { lang } = useI18n();
   const t = useT();
   const [editingProduct, setEditingProduct] = useState<Product | null>(null);
 
@@ -58,10 +60,10 @@ export default function CategoryDetailsContent({
                 <ComponentCard title={t('category.selectedCategory')}>
                   <div>
                     <p className="text-sm text-gray-500 dark:text-gray-400">
-                      {t('category.name')}
+                      {t('category.categoryName.default')}
                     </p>
                     <p className="mt-1 text-base font-medium text-gray-800 dark:text-white/90">
-                      {response.data.body.name}
+                      {response.data.body.name[lang]}
                     </p>
                   </div>
                 </ComponentCard>

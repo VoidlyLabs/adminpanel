@@ -22,13 +22,13 @@ export default function CategoryContent() {
           <div className="xl:col-span-2">
             <CategoriesListFeature
               categories={response.data.body}
-              editingCategoryId={editingCategory?.id}
+              editingCategoryId={editingCategory?._id}
               onEdit={setEditingCategory}
             />
           </div>
 
           <CategoryFormFeature
-            key={editingCategory?.id ?? 'add-category'}
+            key={editingCategory?._id ?? 'add-category'}
             editingCategory={editingCategory}
             onCancelEdit={() => setEditingCategory(null)}
           />

@@ -105,9 +105,22 @@
     "editProduct": "Product form",
     "name": "Name",
     "namePlaceholder": "Enter category name",
-    "productName": "Name",
+    "categoryName": {
+      "uk": "Category name in Ukrainian",
+      "en": "Category name in English",
+      "default": "Name"
+    },
+    "productName": {
+      "uk": "Name in Ukrainian",
+      "en": "Name in English",
+      "default": "Name"
+    },
     "productNamePlaceholder": "Enter product name",
-    "description": "Description",
+    "description": {
+      "uk": "Description in Ukrainian",
+      "en": "Description in English",
+      "default": "Description"
+    },
     "descriptionPlaceholder": "Enter product description",
     "image": "Image",
     "noImage": "No image",

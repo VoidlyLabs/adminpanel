@@ -36,9 +36,13 @@ export default function ProductFormFeature({
   const deleteProductImage = useDeleteProductImage();
   const t = useT();
 
-  const [name, setName] = useState(editingProduct?.name ?? '');
-  const [description, setDescription] = useState(
-    editingProduct?.description ?? '',
+  const [ukName, ukSetName] = useState(editingProduct?.name.uk ?? '');
+  const [enName, enSetName] = useState(editingProduct?.name.en ?? '');
+  const [enDescription, enSetDescription] = useState(
+    editingProduct?.description.en ?? '',
+  );
+  const [ukDescription, ukSetDescription] = useState(
+    editingProduct?.description.uk ?? '',
   );
   const [price, setPrice] = useState(
     editingProduct ? String(editingProduct.price) : '',
@@ -55,8 +59,8 @@ export default function ProductFormFeature({
   const isEditMode = Boolean(editingProduct);
   const numericPrice = Number(price);
   const canSubmit =
-    name.trim() &&
-    description.trim() &&
+    enName.trim() &&
+    enDescription.trim() &&
     price !== '' &&
     !Number.isNaN(numericPrice) &&
     numericPrice >= 0;
@@ -67,8 +71,10 @@ export default function ProductFormFeature({
     deleteProductImage.isPending;
 
   const resetForm = () => {
-    setName('');
-    setDescription('');
+    enSetName('');
+    ukSetName('');
+    enSetDescription('');
+    ukSetDescription('');
     setPrice('');
     setIsAvailable(true);
     setImage(null);
@@ -109,8 +115,14 @@ export default function ProductFormFeature({
         {
           id: editingProduct.id,
           categoryId,
-          name: name.trim(),
-          description: description.trim(),
+          name: {
+            uk: ukName,
+            en: enName,
+          },
+          description: {
+            uk: ukDescription.trim(),
+            en: enDescription.trim(),
+          },
           price: numericPrice,
           isAvailable,
         },
@@ -128,8 +140,14 @@ export default function ProductFormFeature({
     createProduct.mutate(
       {
         categoryId,
-        name: name.trim(),
-        description: description.trim(),
+        name: {
+          uk: ukName.trim(),
+          en: enName.trim(),
+        },
+        description: {
+          uk: ukDescription.trim(),
+          en: enDescription.trim(),
+        },
         price: numericPrice,
         isAvailable,
       },
@@ -168,21 +186,43 @@ export default function ProductFormFeature({
     >
       <form className="space-y-6" onSubmit={handleSubmit}>
         <div>
-          <Label htmlFor="product-name">{t('category.productName')}</Label>
+          <Label htmlFor="product-name">{t('category.productName.en')}</Label>
           <Input
             id="product-name"
-            value={name}
-            onChange={(event) => setName(event.target.value)}
+            value={enName}
+            onChange={(event) => enSetName(event.target.value)}
             placeholder={t('category.productNamePlaceholder')}
             disabled={isPending}
           />
         </div>
 
         <div>
-          <Label>{t('category.description')}</Label>
+          <Label htmlFor="product-name">{t('category.productName.uk')}</Label>
+          <Input
+            id="product-name"
+            value={ukName}
+            onChange={(event) => ukSetName(event.target.value)}
+            placeholder={t('category.productNamePlaceholder')}
+            disabled={isPending}
+          />
+        </div>
+
+        <div>
+          <Label>{t('category.description.en')}</Label>
           <TextArea
-            value={description}
-            onChange={setDescription}
+            value={enDescription}
+            onChange={enSetDescription}
+            placeholder={t('category.descriptionPlaceholder')}
+            rows={5}
+            disabled={isPending}
+          />
+        </div>
+
+        <div>
+          <Label>{t('category.description.uk')}</Label>
+          <TextArea
+            value={ukDescription}
+            onChange={ukSetDescription}
             placeholder={t('category.descriptionPlaceholder')}
             rows={5}
             disabled={isPending}
@@ -210,7 +250,7 @@ export default function ProductFormFeature({
               <div className="flex h-20 w-20 items-center justify-center overflow-hidden rounded-lg border border-gray-200 bg-gray-50 dark:border-gray-800 dark:bg-gray-900">
                 <ImageLoader
                   src={currentImageUrl}
-                  alt={editingProduct.name}
+                  alt={editingProduct.name.en}
                   width={120}
                   height={120}
                   className="h-full w-full object-cover"

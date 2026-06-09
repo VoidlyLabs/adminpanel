@@ -13,6 +13,7 @@ import { useDeleteProduct } from '@/shared/api/services/products/products.querie
 import { useT } from '@/shared/hooks/use-t/use-t.hook';
 import ImageLoader from '@/shared/ui/image-loader/image-loader';
 import toast from 'react-hot-toast';
+import { useI18n } from '@/shared/providers/i18n/i18n.context.ts';
 
 interface ProductsListFeatureProps {
   products: Product[];
@@ -25,6 +26,7 @@ export default function ProductsListFeature({
   onEdit,
   editingProductId,
 }: ProductsListFeatureProps) {
+  const { lang } = useI18n();
   const t = useT();
   const deleteProduct = useDeleteProduct();
 
@@ -57,13 +59,13 @@ export default function ProductsListFeature({
                   isHeader
                   className="px-5 py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400"
                 >
-                  {t('category.productName')}
+                  {t('category.productName.default')}
                 </TableCell>
                 <TableCell
                   isHeader
                   className="px-5 py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400"
                 >
-                  {t('category.description')}
+                  {t('category.description.default')}
                 </TableCell>
                 <TableCell
                   isHeader
@@ -106,7 +108,7 @@ export default function ProductsListFeature({
                         {product.imageUrl ? (
                           <ImageLoader
                             src={product.imageUrl}
-                            alt={product.name}
+                            alt={product.name.en}
                             width={120}
                             height={120}
                             className="h-full w-full object-cover"
@@ -119,11 +121,11 @@ export default function ProductsListFeature({
                       </div>
                     </TableCell>
                     <TableCell className="px-5 py-4 text-start text-sm text-gray-800 dark:text-white/90">
-                      {product.name}
+                      {product.name[lang]}
                     </TableCell>
                     <TableCell className="px-5 py-4 text-start text-sm text-gray-500 dark:text-gray-400">
                       <div className="max-h-[150px] overflow-y-auto">
-                        <p>{product.description}</p>
+                        <p>{product.description[lang]}</p>
                       </div>
                     </TableCell>
                     <TableCell className="px-5 py-4 text-start text-sm text-gray-500 dark:text-gray-400">

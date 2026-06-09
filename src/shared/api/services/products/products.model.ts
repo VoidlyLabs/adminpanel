@@ -4,8 +4,14 @@ import { AxiosResponse } from 'axios';
 export interface Product {
   id: string;
   categoryId: string;
-  name: string;
-  description: string;
+  name: {
+    uk?: string;
+    en?: string;
+  };
+  description: {
+    uk?: string;
+    en?: string;
+  };
   price: number;
   isAvailable: boolean;
   imageUrl: string;

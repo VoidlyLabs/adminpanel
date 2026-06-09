@@ -105,9 +105,22 @@
     "editProduct": "Форма товару",
     "name": "Назва",
     "namePlaceholder": "Введіть назву категорії",
-    "productName": "Назва",
+    "categoryName": {
+      "uk": "Назва на українській",
+      "en": "Назва на англійській",
+      "default": "Назва"
+    },
+    "productName": {
+      "uk": "Назва на українській",
+      "en": "Назва на англійській",
+      "default": "Назва"
+    },
     "productNamePlaceholder": "Введіть назву товару",
-    "description": "Опис",
+    "description": {
+      "uk": "Опис на українській",
+      "en": "Опис на англійській",
+      "default": "Опис"
+    },
     "descriptionPlaceholder": "Введіть опис товару",
     "image": "Зображення",
     "noImage": "Немає зображення",
