@@ -46,11 +46,11 @@ export default function CategoryDetailsContent({
                 <div className="space-y-6 xl:col-span-2">
                   <ProductsListFeature
                     products={categoryProducts}
-                    editingProductId={editingProduct?.id}
+                    editingProductId={editingProduct?._id}
                     onEdit={setEditingProduct}
                   />
                   <ProductFormFeature
-                    key={editingProduct?.id ?? 'add-product'}
+                    key={editingProduct?._id ?? 'add-product'}
                     categoryId={categoryId}
                     editingProduct={editingProduct}
                     onCancelEdit={() => setEditingProduct(null)}

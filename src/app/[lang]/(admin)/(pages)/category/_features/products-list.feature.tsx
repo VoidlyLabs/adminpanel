@@ -35,7 +35,7 @@ export default function ProductsListFeature({
       return;
     }
 
-    deleteProduct.mutate(product.id, {
+    deleteProduct.mutate(product._id, {
       onSuccess() {
         toast.success(t('category.toasts.productDeleted'));
       },
@@ -102,7 +102,7 @@ export default function ProductsListFeature({
                 </TableRow>
               ) : (
                 products.map((product) => (
-                  <TableRow key={product.id}>
+                  <TableRow key={product._id}>
                     <TableCell className="px-5 py-4 text-start text-sm text-gray-500 dark:text-gray-400">
                       <div className="flex h-20 w-20 items-center justify-center overflow-hidden rounded-lg border border-gray-200 bg-gray-50 dark:border-gray-800 dark:bg-gray-900">
                         {product.imageUrl ? (
@@ -144,7 +144,7 @@ export default function ProductsListFeature({
                           disabled={deleteProduct.isPending}
                           onClick={() => onEdit(product)}
                         >
-                          {editingProductId === product.id
+                          {editingProductId === product._id
                             ? t('category.editing')
                             : t('category.edit')}
                         </button>

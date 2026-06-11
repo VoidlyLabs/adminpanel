@@ -22,13 +22,13 @@ export default function UsersContent() {
           <div className="xl:col-span-2">
             <UsersListFeature
               users={response.data.body}
-              editingUserId={editingUser?.id}
+              editingUserId={editingUser?._id}
               onEdit={setEditingUser}
             />
           </div>
 
           <UserFormFeature
-            key={editingUser?.id ?? 'add-user'}
+            key={editingUser?._id ?? 'add-user'}
             editingUser={editingUser}
             onCancelEdit={() => setEditingUser(null)}
           />

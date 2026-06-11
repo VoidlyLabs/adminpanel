@@ -2,7 +2,7 @@ import { BasicAPIResponse } from '@/shared/api/core/basic/basic.models';
 import { AxiosResponse } from 'axios';
 
 export interface Product {
-  id: string;
+  _id: string;
   categoryId: string;
   name: {
     uk?: string;
@@ -25,7 +25,7 @@ export type Product_Create_Request = Pick<
   Product,
   'categoryId' | 'name' | 'description' | 'price' | 'isAvailable'
 >;
-export type Product_Update_Request = Pick<Product, 'id'> &
+export type Product_Update_Request = Pick<Product, '_id'> &
   Partial<
     Pick<
       Product,
@@ -33,7 +33,7 @@ export type Product_Update_Request = Pick<Product, 'id'> &
     >
   >;
 export interface Product_UpdateImage_Request {
-  id: string;
+  _id: string;
   image: File;
 }
 

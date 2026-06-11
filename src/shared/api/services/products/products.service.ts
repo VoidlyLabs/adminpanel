@@ -24,7 +24,7 @@ export class ProductsService {
   }
 
   static update(data: Product_Update_Request): Promise<Product_Response> {
-    const { id, ...body } = data;
+    const { _id, ...body } = data;
 
     return AuthAPI.request({
       method: 'PATCH',

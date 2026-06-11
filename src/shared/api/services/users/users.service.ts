@@ -27,7 +27,7 @@ export class UsersService {
   }
 
   static update(data: User_Update_Request): Promise<User_Response> {
-    const { id, ...body } = data;
+    const { _id, ...body } = data;
 
     return AuthAPI.request({
       method: 'PATCH',

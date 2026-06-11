@@ -95,7 +95,7 @@ export default function ProductFormFeature({
 
     updateProductImage.mutate(
       {
-        id: productId,
+        _id: productId,
         image,
       },
       {
@@ -113,7 +113,7 @@ export default function ProductFormFeature({
     if (editingProduct) {
       updateProduct.mutate(
         {
-          id: editingProduct.id,
+          _id: editingProduct._id,
           categoryId,
           name: {
             uk: ukName,
@@ -129,7 +129,7 @@ export default function ProductFormFeature({
         {
           onSuccess() {
             toast.success(t('category.toasts.productUpdated'));
-            uploadSelectedImage(editingProduct.id, finishEdit);
+            uploadSelectedImage(editingProduct._id, finishEdit);
           },
         },
       );
@@ -154,7 +154,7 @@ export default function ProductFormFeature({
       {
         onSuccess(response) {
           toast.success(t('category.toasts.productCreated'));
-          uploadSelectedImage(response.data.body.id, resetForm);
+          uploadSelectedImage(response.data.body._id, resetForm);
         },
       },
     );
@@ -170,7 +170,7 @@ export default function ProductFormFeature({
       return;
     }
 
-    deleteProductImage.mutate(editingProduct.id, {
+    deleteProductImage.mutate(editingProduct._id, {
       onSuccess() {
         toast.success(t('category.toasts.productImageDeleted'));
         setCurrentImageUrl('');

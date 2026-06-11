@@ -32,7 +32,7 @@ export default function UsersListFeature({
       return;
     }
 
-    deleteUser.mutate(user.id, {
+    deleteUser.mutate(user._id, {
       onSuccess() {
         toast.success(t('users.toasts.deleted'));
       },
@@ -78,7 +78,7 @@ export default function UsersListFeature({
                 </TableRow>
               ) : (
                 users.map((user) => (
-                  <TableRow key={user.id}>
+                  <TableRow key={user._id}>
                     <TableCell className="px-5 py-4 text-start text-sm font-medium text-gray-800 dark:text-white/90">
                       {user.username}
                     </TableCell>
@@ -93,7 +93,7 @@ export default function UsersListFeature({
                           disabled={deleteUser.isPending}
                           onClick={() => onEdit(user)}
                         >
-                          {editingUserId === user.id
+                          {editingUserId === user._id
                             ? t('users.editing')
                             : t('users.edit')}
                         </button>

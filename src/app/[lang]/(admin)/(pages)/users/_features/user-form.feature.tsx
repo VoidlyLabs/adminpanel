@@ -46,7 +46,7 @@ export default function UserFormFeature({
     if (editingUser) {
       updateUser.mutate(
         {
-          id: editingUser.id,
+          _id: editingUser._id,
           username: username.trim(),
         },
         {

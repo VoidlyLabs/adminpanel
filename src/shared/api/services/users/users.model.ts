@@ -1,5 +1,5 @@
 export interface BasicUser {
-  id: string;
+  _id: string;
   username: string;
   createdAt: string;
   updatedAt: string;
@@ -11,4 +11,4 @@ export type User_Create_Request = Pick<BasicUser, 'username'> & {
   password: string;
 };
 
-export type User_Update_Request = Pick<BasicUser, 'id' | 'username'>;
+export type User_Update_Request = Pick<BasicUser, '_id' | 'username'>;
