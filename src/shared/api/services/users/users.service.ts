@@ -31,7 +31,7 @@ export class UsersService {
 
     return AuthAPI.request({
       method: 'PATCH',
-      url: `/admin/users/${id}`,
+      url: `/admin/users/${_id}`,
       data: body,
     });
   }

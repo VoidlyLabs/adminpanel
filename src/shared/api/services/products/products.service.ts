@@ -28,7 +28,7 @@ export class ProductsService {
 
     return AuthAPI.request({
       method: 'PATCH',
-      url: `/admin/products/${id}`,
+      url: `/admin/products/${_id}`,
       data: body,
     });
   }
@@ -42,7 +42,7 @@ export class ProductsService {
 
     return AuthAPI.request({
       method: 'POST',
-      url: `/admin/products/${data.id}/image`,
+      url: `/admin/products/${data._id}/image`,
       data: formData,
       headers: {
         'Content-Type': 'multipart/form-data',
